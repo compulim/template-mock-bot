@@ -2,8 +2,8 @@
 
 # Setup
 
-1. Create Azure Web Apps
-1. Fork this repository
+1. [Create a new Azure Web App](#create-a-new-azure-web-app)
+1. [Generate a new repository](#generate-a-new-github-repository)
 
 ## Azure Web Apps
 
@@ -81,7 +81,7 @@ Update the application settings JSON below and merge it into your Azure Web App.
 ]
 ```
 
-## GitHub Repository
+## Generate a new GitHub repository
 
 > If you already deployed your Azure Web App before merging application settings, you will need to deploy from GitHub Actions again.
 
@@ -92,3 +92,11 @@ Build a new repository by navigate to https://github.com/compulim/botframework-e
 Go to Settings > Secrets, add a new secret `PUBLISH_PROFILE`.
 
 The content is from the `*.PublishSettings` file from your Azure Web App. Steps at https://docs.microsoft.com/en-us/visualstudio/deployment/tutorial-import-publish-settings-azure?view=vs-2019#create-the-publish-settings-file-in-azure-app-service.
+
+### Restart the first GitHub Actions workflow
+
+Shortly after you generated the repository, a workflow named "Initial commit" will be started.
+
+Since the `PUBLISH_PROFILE` was not set when the workflow is started, the deploy step will fail.
+
+After you added `PUBLISH_PROFILE`, please re-run the "Initial commit" workflow and it should succeed.
