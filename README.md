@@ -4,6 +4,7 @@
 
 1. [Create a new Azure Web App](#create-a-new-azure-web-app)
 1. [Generate a new repository](#generate-a-new-github-repository)
+1. [Testing the bot](#testing-the-bot)
 
 ## Azure Web Apps
 
@@ -100,3 +101,28 @@ Shortly after you generated the repository, a workflow named "Initial commit" wi
 Since the `PUBLISH_PROFILE` was not set when the workflow is started, the deploy step will fail.
 
 After you added `PUBLISH_PROFILE`, please re-run the "Initial commit" workflow and it should succeed.
+
+## Testing the bot
+
+### Test the Direct Line App Service Extension endpoint
+
+Navigate to https://yourbot.azurewebsites.net/.bot/ (with trailing slash). It should return a JSON with `ib`, `k`, and `ob` set to `true`.
+
+### Test via Direct Line
+
+Navigate to https://compulim.github.io/webchat-loader.
+
+1. Protocol: Direct Line via Web Socket
+1. Secret: https://yourbot.azurewebsites.net/api/token/directline
+1. Click "Fetch token"
+1. Click "Open Web Chat in a new window"
+
+### Test via Direct Line App Service Extension
+
+Navigate to https://compulim.github.io/webchat-loader.
+
+1. Protocol: Direct Line App Service Extension
+1. In the box below protocol: yourbot.azurewebsites.net
+1. Secret: https://yourbot.azurewebsites.net/api/token/directlinease
+1. Click "Fetch token"
+1. Click "Open Web Chat in a new window"
