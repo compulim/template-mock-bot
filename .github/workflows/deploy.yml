@@ -51,7 +51,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ secrets && secrets.PUBLISH_PROFILE != '' && startsWith(github.ref, 'refs/heads/') }}
+    if: ${{ startsWith(github.ref, 'refs/heads/') }}
 
     steps:
       - name: Download artifact
@@ -61,6 +61,7 @@ jobs:
 
       - name: Deploy to Azure Web App
         id: deploy
+        if: ${{ secrets.PUBLISH_PROFILE != '' }}
         uses: azure/webapps-deploy@v1
         with:
           slot-name: production
