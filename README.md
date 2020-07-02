@@ -1,5 +1,13 @@
 # Echo bot template
 
+# Background
+
+This echo bot is for development purpose only. Please review the architecture and code before moving to production, some areas:
+
+- Token server should be isolated, secured, and throttled appropriately
+- `trustedOrigin.js` is set up to enable multiple sandbox domains
+- Direct Line token generated have limited trusted origin and may not work in your OAuth scenario
+
 # Setup
 
 1. [Create a new Azure Web App](#create-a-new-azure-web-app)

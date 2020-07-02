@@ -14,7 +14,7 @@ export default async function (
     // body: JSON.stringify({ User: { Id: userId } }),
     body: JSON.stringify({
       user: { id: userId },
-      trustedOrigins: ['https://microsoft.github.io/', `https://${process.env.WEBSITE_HOSTNAME}`]
+      trustedOrigins: [`https://${process.env.WEBSITE_HOSTNAME}`]
     }),
     headers: {
       authorization: `Bearer ${directLineSecret}`,
