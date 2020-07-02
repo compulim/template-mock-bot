@@ -2,6 +2,9 @@
 
 # Setup
 
+1. Create Azure Web Apps
+1. Fork this repository
+
 ## Azure Web Apps
 
 ### Create a new Azure Web Apps
@@ -78,6 +81,14 @@ Update the application settings JSON below and merge it into your Azure Web App.
 ]
 ```
 
-# Deployment
+## GitHub Repository
 
 > If you already deployed your Azure Web App before merging application settings, you will need to deploy from GitHub Actions again.
+
+Build a new repository by navigate to https://github.com/compulim/botframework-echobot-template/generate.
+
+### Add new secret `PUBLISH_PROFILE`
+
+Go to Settings > Secrets, add a new secret `PUBLISH_PROFILE`.
+
+The content is from the `*.PublishSettings` file from your Azure Web App. Steps at https://docs.microsoft.com/en-us/visualstudio/deployment/tutorial-import-publish-settings-azure?view=vs-2019#create-the-publish-settings-file-in-azure-app-service.
