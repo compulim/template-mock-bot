@@ -61,7 +61,6 @@ jobs:
 
       - name: Deploy to Azure Web App
         id: deploy
-        if: ${{ secrets.PUBLISH_PROFILE != '' }}
         uses: azure/webapps-deploy@v1
         with:
           slot-name: production
