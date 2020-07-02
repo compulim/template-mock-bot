@@ -14,11 +14,7 @@ export default async function (
     // body: JSON.stringify({ User: { Id: userId } }),
     body: JSON.stringify({
       user: { id: userId },
-      trustedOrigins: [
-        'https://compulim.github.io/',
-        'https://microsoft.github.io/',
-        'https://webchat-mockbot2.azurewebsites.net/'
-      ]
+      trustedOrigins: ['https://microsoft.github.io/', `https://${process.env.WEBSITE_HOSTNAME}`]
     }),
     headers: {
       authorization: `Bearer ${directLineSecret}`,
