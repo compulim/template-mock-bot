@@ -28,12 +28,12 @@ jobs:
       - run: npm test --if-present
       - run: npm pack
       - run: tar xvf *.tgz
-      - run: mv node_modules package
 
       - name: Run zip -1rq ../zipdeploy.zip .
         run: |
+          zip -1rq zipdeploy.zip node_modules
           cd package
-          ls -la
+          ls -laR
           zip -1rq ../zipdeploy.zip .
 
       - name: Upload artifact (tarball)
