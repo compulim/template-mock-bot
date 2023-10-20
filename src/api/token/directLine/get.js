@@ -1,5 +1,5 @@
-import generateDirectLineToken from '../../../utils/generateDirectLineToken';
-import setImmediateAndInterval from '../../../utils/setImmediateAndInterval';
+import generateDirectLineToken from '../../../utils/generateDirectLineToken.js';
+import setImmediateAndInterval from '../../../utils/setImmediateAndInterval.js';
 
 const PREGENERATE_TOKEN_INTERVAL = 60000;
 
@@ -8,18 +8,22 @@ export default async function getTokenDirectLine(server) {
   let pregeneratedTokens = [];
 
   setImmediateAndInterval(async () => {
-    const now = Date.now();
-    const { conversationId, expires_in: expiresIn, token } = await generateDirectLineToken(DIRECT_LINE_SECRET);
-    const expiresAt = now + expiresIn * 1000;
+    try {
+      const now = Date.now();
+      const { conversationId, expires_in: expiresIn, token } = await generateDirectLineToken(DIRECT_LINE_SECRET);
+      const expiresAt = now + expiresIn * 1000;
 
-    pregeneratedTokens.push({
-      conversationId,
-      expiresIn,
-      expiresAt,
-      token
-    });
+      pregeneratedTokens.push({
+        conversationId,
+        expiresIn,
+        expiresAt,
+        token
+      });
 
-    pregeneratedTokens = pregeneratedTokens.filter(token => token.expiresAt > Date.now() - PREGENERATE_TOKEN_INTERVAL);
+      pregeneratedTokens = pregeneratedTokens.filter(
+        token => token.expiresAt > Date.now() - PREGENERATE_TOKEN_INTERVAL
+      );
+    } catch (error) {}
   }, PREGENERATE_TOKEN_INTERVAL);
 
   server.get('/api/token/directline', async (_, res) => {

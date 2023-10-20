@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import trustedOrigin from '../../../trustedOrigin';
+import trustedOrigin from '../../../trustedOrigin.js';
 
 export default async function postTokenSpeechServices(server) {
   const { SPEECH_SERVICES_REGION, SPEECH_SERVICES_SUBSCRIPTION_KEY } = process.env;

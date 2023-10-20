@@ -1,16 +1,16 @@
-import generateDirectLineToken from '../../../utils/generateDirectLineToken';
-import renewDirectLineToken from '../../../utils/renewDirectLineToken';
-import trustedOrigin from '../../../trustedOrigin';
+import generateDirectLineToken from '../../../utils/generateDirectLineToken.js';
+import renewDirectLineToken from '../../../utils/renewDirectLineToken.js';
+import trustedOrigin from '../../../trustedOrigin.js';
 
 export default function postTokenDirectLine(server) {
   const { DIRECT_LINE_SECRET } = process.env;
 
-  if (!DIRECT_LINE_SECRET) {
-    throw new TypeError('Environment variable "DIRECT_LINE_SECRET" must be set.');
-  }
-
   server.post('/api/token/directline', async (req, res) => {
     try {
+      if (!DIRECT_LINE_SECRET) {
+        throw new TypeError('Environment variable "DIRECT_LINE_SECRET" must be set.');
+      }
+
       const origin = req.header('origin');
 
       if (!trustedOrigin(origin)) {

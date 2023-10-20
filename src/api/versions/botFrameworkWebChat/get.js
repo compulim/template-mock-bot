@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import trustedOrigin from '../../../trustedOrigin';
+import trustedOrigin from '../../../trustedOrigin.js';
 
 const VERSION_REQUEST_VALID_FOR = 60000;
 

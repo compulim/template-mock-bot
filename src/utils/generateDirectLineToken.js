@@ -1,13 +1,13 @@
-import createUserId from './createUserId';
+import createUserId from './createUserId.js';
 
 export default async function (
   directLineSecret = process.env.DIRECT_LINE_SECRET,
   { domain = process.env.DIRECT_LINE_URL || 'https://directline.botframework.com/', userId = createUserId() } = {}
 ) {
   console.log(
-    `Generating Direct Line token using secret "${directLineSecret.substr(0, 3)}...${directLineSecret.substr(
-      -3
-    )}" and user ID "${userId}"`
+    `Generating Direct Line token using secret "${(directLineSecret || '').substr(0, 3)}...${(
+      directLineSecret || ''
+    ).substr(-3)}" and user ID "${userId}"`
   );
 
   const tokenRes = await fetch(`${domain}v3/directline/tokens/generate`, {

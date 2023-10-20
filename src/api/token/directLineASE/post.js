@@ -1,16 +1,16 @@
-import generateDirectLineToken from '../../../utils/generateDirectLineToken';
-import renewDirectLineToken from '../../../utils/renewDirectLineToken';
-import trustedOrigin from '../../../trustedOrigin';
+import generateDirectLineToken from '../../../utils/generateDirectLineToken.js';
+import renewDirectLineToken from '../../../utils/renewDirectLineToken.js';
+import trustedOrigin from '../../../trustedOrigin.js';
 
 export default function postTokenDirectLineASE(server) {
   const { DIRECT_LINE_SECRET, WEBSITE_HOSTNAME } = process.env;
 
-  if (!DIRECT_LINE_SECRET) {
-    throw new TypeError('Environment variable "DIRECT_LINE_SECRET" must be set.');
-  }
-
   server.post('/api/token/directlinease', async (req, res) => {
     try {
+      if (!DIRECT_LINE_SECRET) {
+        throw new TypeError('Environment variable "DIRECT_LINE_SECRET" must be set.');
+      }
+
       if (!WEBSITE_HOSTNAME) {
         return res.send(500, 'only available on azure', { 'Access-Control-Allow-Origin': '*' });
       }

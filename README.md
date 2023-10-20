@@ -26,6 +26,7 @@ Navigate to https://ms.portal.azure.com/#create/Microsoft.WebSite and start crea
 
 ### Update general settings
 
+- Start up script: lib/index.js
 - Required
    - Web sockets: On
 - Optional

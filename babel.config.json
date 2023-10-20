@@ -1,13 +1,11 @@
 {
-  "plugins": [
-    "@babel/plugin-proposal-object-rest-spread"
-  ],
   "presets": [
     [
       "@babel/preset-env",
       {
+        "modules": false,
         "targets": {
-          "node": "12"
+          "node": "18"
         }
       }
     ]
