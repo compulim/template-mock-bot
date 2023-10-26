@@ -29,7 +29,7 @@ jobs:
       - run: npm ci
       - continue-on-error: true
         run: npm run precommit --if-present
-      - run: npm run build --if-preset
+      - run: npm run build --if-present
       - run: npm test --if-present
       - run: npm pack
       - run: tar xvf *.tgz
