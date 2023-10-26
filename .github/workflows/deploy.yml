@@ -7,14 +7,13 @@ on:
   push:
     branches:
       - main
-      - master
   pull_request:
     branches:
       - main
-      - master
 
 jobs:
   build:
+    if: ${{ github.run_number != 1 && !startsWith(github.repository, 'compulim/template-') }}
     runs-on: ubuntu-latest
 
     steps:
