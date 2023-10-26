@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 export default async function getReady(server) {
   server.get('/ready.txt', async (_, res) => {
     try {
