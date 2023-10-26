@@ -1,0 +1,32 @@
+name: Set up scaffold
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  setup:
+    if: ${{ github.run_number == 1 && !startsWith(github.repository, 'compulim/template-') }}
+    permissions:
+      actions: write
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure user profile
+        run: |
+          git config user.email "${{ format('@{0}', github.actor) }}"
+          git config user.name "${{ format('@{0}', github.actor) }}"
+
+      - uses: ./.github/actions/install-default-deps
+        with:
+          latest: true
+
+      - name: Commit and push
+        run: |
+          rm .github/workflows/set-up-scaffold.yml
+          git add --all
+          git commit --message "Initial `template-mock-bot` scaffold"
+          git push --set-upstream origin ${{ github.event.inputs.target-branch }}
