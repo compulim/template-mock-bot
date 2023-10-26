@@ -1,14 +1,8 @@
 env:
-  - es2024
-  - node
+  es2024: true
+  node: true
 extends:
   - eslint:recommended
-overrides:
-  - extends: .eslintrc.typescript.yml
-    files:
-      - '**/*.mts'
-      - '**/*.ts'
-      - '**/*.tsx'
 parserOptions:
   ecmaVersion: latest
   sourceType: module
@@ -20,3 +14,7 @@ rules:
   no-empty:
     - error
     - allowEmptyCatch: true
+  no-unused-vars:
+    - error
+    - argsIgnorePattern: ^_$
+      varsIgnorePattern: ^_

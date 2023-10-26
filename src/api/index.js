@@ -1,4 +1,3 @@
-import getBotFrameworkWebChatVersions from './versions/botFrameworkWebChat/get.js';
 import getDirectLineTokens from './directLine/tokens/get.js';
 import getHealth from './health/get.js';
 import getReady from './ready/get.js';
@@ -15,7 +14,6 @@ import upgrade from './upgrade.js';
 export default async function index(server, options) {
   await Promise.all(
     [
-      getBotFrameworkWebChatVersions,
       getDirectLineTokens,
       getHealth,
       getReady,

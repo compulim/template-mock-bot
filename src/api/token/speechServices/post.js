@@ -6,7 +6,9 @@ export default async function postTokenSpeechServices(server) {
   server.post('/api/token/speechservices', async (req, res) => {
     try {
       if (!SPEECH_SERVICES_REGION || !SPEECH_SERVICES_SUBSCRIPTION_KEY) {
-        return res.send(403, 'Cognitive Services Speech Services authorization token is unavailable.', { 'Access-Control-Allow-Origin': '*' });
+        return res.send(403, 'Cognitive Services Speech Services authorization token is unavailable.', {
+          'Access-Control-Allow-Origin': '*'
+        });
       }
 
       const origin = req.header('origin');
