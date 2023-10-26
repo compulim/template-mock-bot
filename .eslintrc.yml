@@ -1,5 +1,6 @@
 env:
-  - esnext
+  - es2024
+  - node
 extends:
   - eslint:recommended
 overrides:
