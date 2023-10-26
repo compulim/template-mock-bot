@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 import trustedOrigin from '../../../trustedOrigin.js';
 
 export default async function postTokenSpeechServices(server) {
