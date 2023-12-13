@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import './env.ts';
+import './env.js';
 
 import { platform } from 'os';
 import { createServer } from 'http';

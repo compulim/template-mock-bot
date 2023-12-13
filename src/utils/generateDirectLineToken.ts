@@ -1,13 +1,7 @@
-import { type Output, number, object, parse, string } from 'valibot';
+import { parse, type Output } from 'valibot';
 
 import createUserId from './createUserId.js';
-
-const TokenSchema = object({
-  conversationId: string(),
-  expires_in: number(),
-  token: string(),
-  userId: string()
-});
+import TokenSchema from './private/TokenSchema.js';
 
 export default async function (
   directLineSecret: string,
