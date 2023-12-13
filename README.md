@@ -21,17 +21,17 @@ This echo bot is for development purpose only. Please review the architecture an
 Navigate to https://ms.portal.azure.com/#create/Microsoft.WebSite and start creating a new Azure Web App.
 
 - Publish: Code
-- Runtime stack: Node.js 12 LTS
+- Runtime stack: Node.js 18
 - Operating System: Windows
 
 ### Update general settings
 
-- Start up script: lib/index.js
-- Required
-   - Web sockets: On
-- Optional
-   - FTP state: Disabled
-   - ARR affinity: Off
+- Stack: Node
+- Platform: 64 Bit
+- Basic Auth Publishing Credentials: On (for publishing via GitHub Actions)
+- Web sockets: On
+- (Optional) FTP state: Disabled
+- (Optional) Session affinity: Off
 
 ### Merge application settings
 
