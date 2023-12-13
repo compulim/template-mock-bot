@@ -55,7 +55,7 @@ runs:
           nodemon${{ env.VERSION_TAG }} \
           prettier${{ env.VERSION_TAG }} \
           tsup${{ env.VERSION_TAG }} \
-          typescript@{{ env.VERSION_TAG }}
+          typescript${{ env.VERSION_TAG }}
       shell: bash
       working-directory: ${{ inputs.path }}
 
