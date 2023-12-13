@@ -12,6 +12,7 @@ on:
       - main
 
 env:
+  AZURE_WEB_APP_NAME: ${{ vars.AZURE_WEB_APP_NAME }}
   PUBLISH_PROFILE: ${{ secrets.PUBLISH_PROFILE }}
 
 jobs:
@@ -68,10 +69,9 @@ jobs:
       - id: deploy
         if: env.PUBLISH_PROFILE
         name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
-          app-name: 'webchat-relaybot'
-          slot-name: production
+          app-name: ${{ env.AZURE_WEB_APP_NAME }}
           publish-profile: ${{ env.PUBLISH_PROFILE }}
           package: zipdeploy.zip
 
