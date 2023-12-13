@@ -94,7 +94,7 @@ Build a new repository by navigate to https://github.com/compulim/botframework-e
 
 ### Add new secret `PUBLISH_PROFILE`
 
-Go to Settings > Secrets, add a new secret `PUBLISH_PROFILE`.
+Go to Settings > Secrets and variables > Actions, add a new secret `PUBLISH_PROFILE` and paste the content of the publish profile XML. Also, add a new variable `AZURE_WEB_APP_NAME` and put the web app name (without `.azurewebsites.net`).
 
 The content is from the `*.PublishSettings` file from your Azure Web App. Steps at https://docs.microsoft.com/en-us/visualstudio/deployment/tutorial-import-publish-settings-azure?view=vs-2019#create-the-publish-settings-file-in-azure-app-service.
 
