@@ -27,10 +27,10 @@ Navigate to https://ms.portal.azure.com/#create/Microsoft.WebSite and start crea
 ### Update general settings
 
 - Stack: Node
-- Platform: 64 Bit
 - Basic Auth Publishing Credentials: On (for publishing via GitHub Actions)
 - Web sockets: On
 - (Optional) FTP state: Disabled
+- (Optional) Platform: 64 Bit
 - (Optional) Session affinity: Off
 
 ### Merge application settings
