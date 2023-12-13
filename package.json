@@ -4,17 +4,22 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=18"
+    "node": ">= 18"
   },
   "files": [
     "iisnode.yml",
     "src/**/*",
     "web.config"
   ],
-  "main": "src/index.js",
+  "main": "./dist/index.js",
   "type": "module",
+  "tsup": {
+    "format": "esm",
+    "target": "node18"
+  },
   "scripts": {
+    "build": "tsup-node ./src/index.ts",
     "precommit": "eslint .",
-    "start": "nodemon ."
+    "start": "nodemon --exec \"npm run build && node .\" --ext js,json,ts --verbose --watch './src/**'"
   }
 }

@@ -1,9 +1,18 @@
+import { type Output, number, object, parse, string } from 'valibot';
+
 import createUserId from './createUserId.js';
 
+const TokenSchema = object({
+  conversationId: string(),
+  expires_in: number(),
+  token: string(),
+  userId: string()
+});
+
 export default async function (
-  directLineSecret = process.env.DIRECT_LINE_SECRET,
+  directLineSecret: string,
   { domain = process.env.DIRECT_LINE_URL || 'https://directline.botframework.com/', userId = createUserId() } = {}
-) {
+): Promise<Output<typeof TokenSchema>> {
   console.log(
     `Generating Direct Line token using secret "${(directLineSecret || '').substr(0, 3)}...${(
       directLineSecret || ''
@@ -35,7 +44,7 @@ export default async function (
     throw new Error(`Direct Line service responded ${JSON.stringify(json.error)} while generating new token`);
   }
 
-  const { conversationId, ...otherJSON } = json;
+  const result = parse(TokenSchema, json);
 
-  return { ...otherJSON, conversationId, userId: userId };
+  return { ...result, userId: userId };
 }

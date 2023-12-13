@@ -1,19 +1,9 @@
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
-import { BotFrameworkAdapter } from 'botbuilder';
-import { MicrosoftAppCredentials } from 'botframework-connector';
-
-// Set up to authenticate on scratch and PPE environment.
-MicrosoftAppCredentials.trustServiceUrl('https://api.scratch.botframework.com');
-MicrosoftAppCredentials.trustServiceUrl('https://state.scratch.botframework.com');
-MicrosoftAppCredentials.trustServiceUrl('https://token.scratch.botframework.com');
-
-MicrosoftAppCredentials.trustServiceUrl('https://api.ppe.botframework.com');
-MicrosoftAppCredentials.trustServiceUrl('https://state.ppe.botframework.com');
-MicrosoftAppCredentials.trustServiceUrl('https://token.ppe.botframework.com');
+import { BotFrameworkAdapter, type TurnContext } from 'botbuilder';
 
 // Catch-all for errors.
-async function onTurnErrorHandler(context, error) {
+const onTurnErrorHandler: BotFrameworkAdapter['onTurnError'] = async (context: TurnContext, error: Error) => {
   // This check writes out errors to console log .vs. app insights.
   // NOTE: In production environment, you should consider logging this to Azure
   //       application insights.
@@ -30,7 +20,7 @@ async function onTurnErrorHandler(context, error) {
   // Send a message to the user
   await context.sendActivity('The bot encountered an error or bug.');
   await context.sendActivity('To continue to run this bot, please fix the bot source code.');
-}
+};
 
 export default async function createBotFrameworkAdapter({
   env: {
@@ -41,7 +31,12 @@ export default async function createBotFrameworkAdapter({
   } = process.env
 } = {}) {
   // See https://aka.ms/about-bot-adapter to learn more about how bots work.
-  const adapter = new BotFrameworkAdapter({ appId: appID, appPassword, channelService, openIdMetadata });
+  const adapter = new BotFrameworkAdapter({
+    ...(channelService ? { channelService } : {}),
+    ...(openIdMetadata ? { openIdMetadata } : {}),
+    appId: appID,
+    appPassword
+  });
 
   // Set the onTurnError for the singleton BotFrameworkAdapter.
   adapter.onTurnError = onTurnErrorHandler;
