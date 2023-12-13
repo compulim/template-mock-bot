@@ -6,7 +6,7 @@ on:
 
 jobs:
   setup:
-    if: ${{ github.run_number == 1 && !startsWith(github.repository, 'compulim/template-') }}
+    if: github.run_number == 1 && !startsWith(github.repository, 'compulim/template-')
     permissions:
       actions: write
       contents: write
