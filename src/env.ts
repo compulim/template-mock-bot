@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'url';
 import { join } from 'path';
 import { Output, object, optional, parse, string } from 'valibot';
 import dotenv from 'dotenv';
