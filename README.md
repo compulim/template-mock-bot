@@ -82,11 +82,6 @@ Update the application settings JSON below and merge it into your Azure Web App.
     "name": "SPEECH_SERVICES_REGION",
     "value": "",
     "slotSetting": false
-  },
-  {
-    "name": "SPEECH_SERVICES_SUBSCRIPTION_KEY",
-    "value": "",
-    "slotSetting": false
   }
 ]
 ```
