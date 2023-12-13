@@ -8,7 +8,7 @@
   },
   "files": [
     "iisnode.yml",
-    "src/**/*",
+    "dist/**/*",
     "web.config"
   ],
   "main": "./dist/index.js",
