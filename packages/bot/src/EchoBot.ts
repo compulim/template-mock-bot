@@ -1,7 +1,12 @@
-import { ActivityHandler, MessageFactory } from 'botbuilder';
+import { ActivityHandler, MessageFactory, type ConversationState, type UserState } from 'botbuilder';
+
+type BotInit = {
+  conversationState?: ConversationState;
+  userState?: UserState;
+};
 
 export default class EchoBot extends ActivityHandler {
-  constructor() {
+  constructor({ conversationState, userState }: BotInit = {}) {
     super();
 
     // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
@@ -11,6 +16,9 @@ export default class EchoBot extends ActivityHandler {
       await context.sendActivity(MessageFactory.text(replyText, replyText));
       // By calling next() you ensure that the next BotHandler is run.
       await next();
+
+      await conversationState?.saveChanges(context);
+      await userState?.saveChanges(context);
     });
 
     this.onMembersAdded(async (context, next) => {

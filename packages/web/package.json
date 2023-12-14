@@ -20,6 +20,7 @@
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.2",
     "@types/math-random": "^1.0.2",
+    "botframework-directlinejs": "^0.15.5",
     "eslint": "^8.55.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.0",

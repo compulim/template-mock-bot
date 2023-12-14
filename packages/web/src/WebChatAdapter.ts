@@ -1,65 +1,125 @@
 import { ConnectionStatus } from 'botframework-directlinejs';
-import { BotAdapter, ConversationState, MemoryStorage, TurnContext, UserState } from 'botbuilder';
-import Observable from './private/Observable';
+import { BotAdapter, TurnContext, type Activity, type ConversationReference } from 'botbuilder';
+import random from 'math-random';
+import { type LogicHandler } from './LogicHandler.js';
 
-import MockBot from '../MockBot';
-import dateNow from './utils/dateNow';
+import dateNow from './private/incrementalNow.js';
+import DeferredObservable from './private/DeferredObservable.js';
+import Observable from './private/Observable.js';
 
 export const USER_PROFILE = { id: 'user', role: 'user' };
 export const BOT_PROFILE = { id: 'bot', name: 'bot', role: 'bot' };
+
+type ServiceActivity = Readonly<
+  Omit<Activity, 'timestamp'> & {
+    conversation: {
+      id: LocalConversationId;
+    };
+    timestamp: string;
+  }
+>;
+
+type LocalConversationId = `c_${string}`;
+
+type ChatAdapter = {
+  activity$: Observable<ServiceActivity>;
+  connectionStatus$: Observable<number>;
+  end(): void;
+  getSessionId(): Observable<never>;
+  postActivity(activity: Activity): Observable<string>;
+};
 
 /**
  * Custom BotAdapter used for deploying a bot in a browser.
  */
 export default class WebChatAdapter extends BotAdapter {
+  #activityDeferred: DeferredObservable<ServiceActivity>;
+  #connectionStatusDeferred: DeferredObservable<number>;
+
+  #botConnection: ChatAdapter;
+  #conversationId: LocalConversationId;
+  #logic: LogicHandler;
+
   constructor() {
     super();
 
-    this.botConnection = {
-      connectionStatus$: new Observable(observer => {
-        observer.next(ConnectionStatus.Uninitialized);
-        observer.next(ConnectionStatus.Connecting);
-        observer.next(ConnectionStatus.Online);
-      }),
-      activity$: new Observable(observer => {
-        this.activityObserver = observer;
-      }),
+    this.#conversationId = `c_${random().toString(36).substring(2, 7)}`;
+    this.#logic = () => Promise.resolve();
+
+    let firstActivitySubscription = true;
+
+    this.#connectionStatusDeferred = new DeferredObservable<number>();
+
+    this.#activityDeferred = new DeferredObservable(() => {
+      firstActivitySubscription = true;
+
+      this.#connectionStatusDeferred.next(0 satisfies ConnectionStatus.Uninitialized);
+      this.#connectionStatusDeferred.next(1 satisfies ConnectionStatus.Connecting);
+      this.#connectionStatusDeferred.next(2 satisfies ConnectionStatus.Online);
+    });
+
+    this.#botConnection = {
+      activity$: this.#activityDeferred.observable,
+      connectionStatus$: this.#connectionStatusDeferred.observable,
       end() {},
-      getSessionId: () => new Observable(observer => observer.complete()),
-      postActivity: activity => {
+      getSessionId() {
+        return new Observable(observer => observer.error(new Error('Not supported.')));
+      },
+      postActivity: (activity: Activity) => {
         const now = dateNow();
         const timestamp = new Date(now).toISOString();
         const id = now + Math.random().toString(36);
 
-        return new Observable(observer => {
-          const serverActivity = {
+        return new Observable<string>(observer => {
+          const serviceActivity: ServiceActivity = {
             ...activity,
             id,
-            conversation: { id: 'bot' },
+            conversation: {
+              conversationType: 'offline',
+              id: this.#conversationId,
+              name: this.#conversationId,
+              isGroup: false
+            },
             channelId: 'webchat',
             recipient: BOT_PROFILE,
             timestamp
           };
 
-          this.onReceive(serverActivity).then(() => {
+          async () => {
+            await this.onReceive(serviceActivity);
+
             observer.next(id);
             observer.complete();
 
-            this.activityObserver.next(serverActivity);
-          });
+            this.#activityDeferred.next(serviceActivity);
+          };
         });
       }
     };
   }
 
-  async continueConversation(reference, logic) {
+  get botConnection(): ChatAdapter {
+    return this.#botConnection;
+  }
+
+  async continueConversation(reference: Partial<ConversationReference>, logic: LogicHandler): Promise<void> {
     const activity = TurnContext.applyConversationReference(
       { type: 'event', name: 'continueConversation' },
       reference,
       true
     );
+
     const context = new TurnContext(this, activity);
-    return await this.runMiddleware(context, logic as any);
+
+    await this.runMiddleware(context, logic);
+  }
+
+  override async deleteActivity(): Promise<never> {
+    throw new Error('Not supported.');
+  }
+
+  override async updateActivity(): Promise<never> {
+    throw new Error('Not supported.');
   }
 
   /**
@@ -68,7 +128,7 @@ export default class WebChatAdapter extends BotAdapter {
    * @param {TurnContext} context
    * @param {Activity[]} activities
    */
-  async sendActivities(context, activities) {
+  async sendActivities(_: TurnContext, activities: Activity[]) {
     const activityData = {
       channelId: 'webchat',
       conversation: { id: 'bot' },
@@ -89,7 +149,25 @@ export default class WebChatAdapter extends BotAdapter {
 
     return sentActivities.map(activity => {
       const { id } = activity;
-      this.activityObserver.next(activity);
+
+      this.#activityDeferred.next({
+        ...activity,
+        conversation: {
+          conversationType: 'offline',
+          id: this.#conversationId,
+          isGroup: false,
+          name: activity.conversation.id
+        },
+        from: {
+          id: activity.from.id,
+          name: activity.from.id
+        },
+        recipient: {
+          id: activity.recipient.id,
+          name: activity.recipient.id
+        }
+      });
+
       return { id };
     });
   }
@@ -98,8 +176,9 @@ export default class WebChatAdapter extends BotAdapter {
    * Registers the business logic for the adapter, it takes a handler that takes a TurnContext object as a parameter.
    * @param {function} logic The driver code of the developer's bot application. This code receives and responds to user messages.
    */
-  processActivity(logic) {
-    this.logic = logic;
+  processActivity(logic: LogicHandler) {
+    this.#logic = logic;
+
     return this;
   }
 
@@ -107,30 +186,13 @@ export default class WebChatAdapter extends BotAdapter {
    * Runs the bot's middleware pipeline in addition to any business logic, if `this.logic` is found.
    * @param {Activity} activity
    */
-  onReceive(activity) {
-    const context = new TurnContext(this, activity);
+  onReceive(activity: ServiceActivity) {
+    const context = new TurnContext(this, {
+      ...activity,
+      timestamp: new Date(activity.timestamp)
+    });
 
     // Runs the middleware pipeline followed by any registered business logic.
-    return this.runMiddleware(context, this.logic || function() {});
+    return this.runMiddleware(context, this.#logic || (() => {}));
   }
 }
-
-export const createDirectLine = ({ processor } = {}) => {
-  const mockBotAdapter = new WebChatAdapter();
-
-  if (!processor) {
-    const memory = new MemoryStorage();
-    const conversationState = new ConversationState(memory);
-    const userState = new UserState(memory);
-
-    const mockBot = new MockBot({ conversationState, userState });
-
-    mockBotAdapter.processActivity(async context => {
-      await mockBot.run(context);
-    });
-  } else {
-    mockBotAdapter.processActivity(processor);
-  }
-
-  return mockBotAdapter.botConnection;
-};
