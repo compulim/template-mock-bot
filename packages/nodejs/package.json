@@ -6,6 +6,7 @@
   "main": "./dist/index.global.js",
   "scripts": {
     "build": "tsup-node ./src/index.ts",
-    "precommit": "eslint ."
+    "precommit": "eslint .",
+    "scaffold": "npm install --save @npm-workspace/bot@0.0.0-0 express@latest math-random@latest valibot@latest ws@latest && npm install --save-dev @types/express@latest @types/math-random@latest @types/node@latest eslint-plugin-node@latest tsup@latest"
   }
 }

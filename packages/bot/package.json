@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "tsup ./src/index.ts",
-    "precommit": "eslint ."
+    "precommit": "eslint .",
+    "scaffold": "npm install --save botbuilder@latest dotenv@latest pretty-ms@latest && npm install --save-dev tsup@latest"
   }
 }

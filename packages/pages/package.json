@@ -11,6 +11,7 @@
     "precommit": "npm run precommit:eslint && npm run precommit:typescript",
     "precommit:eslint": "eslint ./src/",
     "precommit:typescript": "tsc --project ./src/tsconfig.json",
+    "scaffold": "npm install --save @npm-workspace/web@0.0.0-0 assert@latest botframework-webchat@latest buffer@latest constants@npm:constants-browserify@latest crypto@npm:crypto-browserify@latest http@npm:stream-http@latest https@npm:https-browserify@latest os@npm:os-browserify@latest path@npm:path-browserify@latest react-dom@latest react@latest stream@npm:stream-browserify@latest string_decoder@latest timers@npm:timers-browserify@latest url@latest util@latest web@latest && npm install --save-dev @types/math-random@latest @types/react@latest @types/react-dom@latest eslint-plugin-react@latest esbuild@latest",
     "start": "npm run build -- --servedir=./public"
   }
 }
