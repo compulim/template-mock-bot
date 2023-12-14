@@ -128,7 +128,7 @@ runs:
           --workspace=nodejs \
           @types/express${{ env.VERSION_TAG }} \
           @types/math-random${{ env.VERSION_TAG }} \
-          @types/node${{ env.VERSION_TAG }}
+          @types/node${{ env.VERSION_TAG }} \
           eslint-plugin-node${{ env.VERSION_TAG }} \
           tsup${{ env.VERSION_TAG }}
       shell: bash
@@ -157,7 +157,7 @@ runs:
           --save-dev ${{ inputs.exact-prod == 'true' && '--save-exact' || '' }} \
           --workspace=web \
           @types/math-random${{ env.VERSION_TAG }} \
-          botframework-directlinejs${{ env.VERSION_TAG }}
+          botframework-directlinejs${{ env.VERSION_TAG }} \
           tsup${{ env.VERSION_TAG }}
       shell: bash
       working-directory: ${{ inputs.path }}
