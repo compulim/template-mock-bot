@@ -1,7 +1,7 @@
 import './env.js';
 
 import { createServer } from 'http';
-import { EchoBot } from 'bot';
+import { EchoBot } from '@npm-workspace/bot';
 import { platform } from 'os';
 import express from 'express';
 

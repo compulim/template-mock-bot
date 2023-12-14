@@ -2,9 +2,6 @@ name: Install dependencies
 
 description: Install default dependencies
 inputs:
-  exact-prod:
-    default: false
-    description: Install exact version for production dependencies
   latest:
     default: false
     description: Install latest version
@@ -27,7 +24,7 @@ runs:
       run: |
         npm install \
           --save \
-          --workspace=bot \
+          --workspace=@npm-workspace/bot \
           botbuilder${{ env.VERSION_TAG }} \
           dotenv${{ env.VERSION_TAG }} \
           pretty-ms${{ env.VERSION_TAG }}
@@ -40,7 +37,8 @@ runs:
       run: |
         npm install \
           --save \
-          --workspace=nodejs \
+          --workspace=@npm-workspace/nodejs \
+          @npm-workspace/bot@0.0.0-0 \
           express${{ env.VERSION_TAG }} \
           math-random${{ env.VERSION_TAG }} \
           valibot${{ env.VERSION_TAG }} \
@@ -53,8 +51,9 @@ runs:
       name: Run npm install for pages/production
       run: |
         npm install \
-          --save-dev \
-          --workspace=pages \
+          --save \
+          --workspace=@npm-workspace/pages \
+          @npm-workspace/web@0.0.0-0 \
           assert${{ env.VERSION_TAG }} \
           botframework-webchat${{ env.VERSION_TAG }} \
           buffer${{ env.VERSION_TAG }} \
@@ -80,8 +79,9 @@ runs:
       name: Run npm install for web/production
       run: |
         npm install \
-          --save-dev \
-          --workspace=web \
+          --save \
+          --workspace=@npm-workspace/web \
+          @npm-workspace/bot@0.0.0-0 \
           botbuilder${{ env.VERSION_TAG }} \
           math-random${{ env.VERSION_TAG }} \
           pretty-ms${{ env.VERSION_TAG }} \
@@ -94,7 +94,7 @@ runs:
       name: Run npm install for */development
       run: |
         npm install \
-          --save-dev ${{ inputs.exact-prod == 'true' && '--save-exact' || '' }} \
+          --save-dev \
           --workspaces \
           @tsconfig/strictest${{ env.VERSION_TAG }} \
           eslint${{ env.VERSION_TAG }} \
@@ -113,8 +113,8 @@ runs:
       name: Run npm install for bot/development
       run: |
         npm install \
-          --save-dev ${{ inputs.exact-prod == 'true' && '--save-exact' || '' }} \
-          --workspace=bot \
+          --save-dev \
+          --workspace=@npm-workspace/bot \
           tsup${{ env.VERSION_TAG }}
       shell: bash
       working-directory: ${{ inputs.path }}
@@ -124,8 +124,8 @@ runs:
       name: Run npm install for nodejs/development
       run: |
         npm install \
-          --save-dev ${{ inputs.exact-prod == 'true' && '--save-exact' || '' }} \
-          --workspace=nodejs \
+          --save-dev \
+          --workspace=@npm-workspace/nodejs \
           @types/express${{ env.VERSION_TAG }} \
           @types/math-random${{ env.VERSION_TAG }} \
           @types/node${{ env.VERSION_TAG }} \
@@ -139,8 +139,8 @@ runs:
       name: Run npm install for pages/development
       run: |
         npm install \
-          --save-dev ${{ inputs.exact-prod == 'true' && '--save-exact' || '' }} \
-          --workspace=pages \
+          --save-dev \
+          --workspace=@npm-workspace/pages \
           @types/math-random${{ env.VERSION_TAG }} \
           @types/react${{ env.VERSION_TAG }} \
           @types/react-dom${{ env.VERSION_TAG }} \
@@ -154,8 +154,8 @@ runs:
       name: Run npm install for web/development
       run: |
         npm install \
-          --save-dev ${{ inputs.exact-prod == 'true' && '--save-exact' || '' }} \
-          --workspace=web \
+          --save-dev \
+          --workspace=@npm-workspace/web \
           @types/math-random${{ env.VERSION_TAG }} \
           botframework-directlinejs${{ env.VERSION_TAG }} \
           tsup${{ env.VERSION_TAG }}
@@ -167,7 +167,7 @@ runs:
       name: Run npm install for root/development
       run: |
         npm install \
-          --save-dev ${{ inputs.exact-prod == 'true' && '--save-exact' || '' }} \
+          --save-dev \
           nodemon${{ env.VERSION_TAG }}
       shell: bash
       working-directory: ${{ inputs.path }}

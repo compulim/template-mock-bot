@@ -1,6 +1,6 @@
 import './App.css';
 
-import { createDirectLine } from 'web';
+import { createDirectLine } from '@npm-workspace/web';
 import { memo, useMemo } from 'react';
 import WebChat from 'botframework-webchat';
 

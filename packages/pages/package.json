@@ -1,5 +1,5 @@
 {
-  "name": "pages",
+  "name": "@npm-workspace/pages",
   "version": "0.0.0-0",
   "private": true,
   "scripts": {

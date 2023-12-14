@@ -1,5 +1,5 @@
 {
-  "name": "nodejs",
+  "name": "@npm-workspace/nodejs",
   "version": "0.0.0-0",
   "license": "MIT",
   "private": true,
