@@ -3,7 +3,7 @@
   "version": "0.0.0-0",
   "private": true,
   "scripts": {
-    "build": "node ./esbuild.mjs",
+    "build": "esbuild --bundle --entry-names=[ext]/[name] --jsx=automatic --minify --outdir=./public/static/ --sourcemap app=./src/app/index.tsx",
     "bump": "npm run bump:prod && npm run bump:dev",
     "bump:dev": "if [ `cat package.json | jq -r '.devDependencies | length'` -ne 0 ]; then npm install $BUMP_DEV_OPTIONS $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.devDependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
     "bump:prod": "if [ `cat package.json | jq -r '.dependencies | length'` -ne 0 ]; then npm install $BUMP_PROD_OPTIONS $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.dependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
@@ -11,7 +11,7 @@
     "precommit": "npm run precommit:eslint && npm run precommit:typescript",
     "precommit:eslint": "eslint ./src/",
     "precommit:typescript": "tsc --project ./src/tsconfig.json",
-    "scaffold": "npm install --save @npm-workspace/web@0.0.0-0 assert@latest botframework-webchat@latest buffer@latest constants@npm:constants-browserify@latest crypto@npm:crypto-browserify@latest http@npm:stream-http@latest https@npm:https-browserify@latest os@npm:os-browserify@latest path@npm:path-browserify@latest react-dom@latest react@latest stream@npm:stream-browserify@latest string_decoder@latest timers@npm:timers-browserify@latest url@latest util@latest web@latest && npm install --save-dev @types/math-random@latest @types/react@latest @types/react-dom@latest eslint-plugin-react@latest esbuild@latest",
+    "scaffold": "npm install --save @npm-workspace/offline-chat-adapter@0.0.0-0 botframework-webchat@latest react-dom@latest react@latest && npm install --save-dev @types/math-random@latest @types/react@latest @types/react-dom@latest eslint-plugin-react@latest esbuild@latest",
     "start": "npm run build -- --servedir=./public"
   }
 }

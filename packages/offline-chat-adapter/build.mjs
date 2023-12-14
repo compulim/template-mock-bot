@@ -17,14 +17,13 @@ const nodeResolvePlugin = {
 
 await esbuild.build({
   bundle: true,
-  entryNames: '[ext]/[name]',
   entryPoints: {
-    app: './src/app/index.tsx'
+    app: './src/index.ts'
   },
+  format: 'esm',
   inject: ['./esbuild/global-shim.js'],
-  jsx: 'automatic',
   minify: true,
-  outdir: './public/static/',
+  outfile: './dist/index.mjs',
   plugins: [nodeResolvePlugin],
-  sourcemap: 'external'
+  sourcemap: 'inline'
 });

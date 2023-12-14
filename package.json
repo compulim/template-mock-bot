@@ -9,21 +9,21 @@
   "workspaces": [
     "packages/bot/",
     "packages/nodejs/",
-    "packages/web/",
+    "packages/offline-chat-adapter/",
     "packages/pages/"
   ],
   "files": [
     "iisnode.yml",
     "packages/nodejs/bot/**/*",
     "packages/nodejs/dist/**/*",
-    "packages/nodejs/web/**/*",
+    "packages/nodejs/offline-chat-adapter/**/*",
     "web.config"
   ],
   "main": "./packages/nodejs/dist/index.global.js",
   "exports": {
     ".": {
-      "import": "./packages/bot/dist/index.js",
-      "browser": "./packages/web/dist/index.js"
+      "import": "./packages/bot/dist/index.mjs",
+      "browser": "./packages/offline-chat-adapter/dist/index.mjs"
     }
   },
   "scripts": {
