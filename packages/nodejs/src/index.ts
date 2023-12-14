@@ -1,14 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 import './env.js';
 
-import { platform } from 'os';
 import { createServer } from 'http';
+import { EchoBot } from 'bot';
+import { platform } from 'os';
 import express from 'express';
 
 import createBotFrameworkAdapter from './createBotFrameworkAdapter.js';
-import EchoBot from './bot.js';
 import setupAPI from './api/index.js';
 
 const { APPSETTING_WEBSITE_SITE_NAME, PORT = 3978 } = process.env;

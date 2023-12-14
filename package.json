@@ -6,15 +6,31 @@
   "engines": {
     "node": ">= 18"
   },
+  "workspaces": [
+    "packages/bot/",
+    "packages/nodejs/",
+    "packages/web/"
+  ],
   "files": [
     "iisnode.yml",
-    "dist/**/*",
+    "packages/nodejs/bot/**/*",
+    "packages/nodejs/dist/**/*",
+    "packages/nodejs/web/**/*",
     "web.config"
   ],
-  "main": "./dist/index.global.js",
+  "main": "./packages/nodejs/dist/index.global.js",
+  "exports": {
+    ".": {
+      "import": "./packages/bot/dist/index.js",
+      "browser": "./packages/web/dist/index.js"
+    }
+  },
   "scripts": {
-    "build": "tsup-node ./src/index.ts",
-    "precommit": "eslint .",
-    "start": "nodemon --exec \"npm run build && node .\" --ext js,json,ts --verbose --watch './src/**'"
+    "build": "npm run build --workspaces",
+    "precommit": "npm run precommit --workspaces",
+    "start": "nodemon --exec \"npm run build && node .\" --ext js,json,ts --verbose --watch './packages/*/src/**'"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }

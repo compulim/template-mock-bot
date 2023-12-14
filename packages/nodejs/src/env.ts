@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 
 // Import required bot configuration.
 // const ENV_FILE = join(fileURLToPath(import.meta.url), '../../.env');
-const ENV_FILE = join(__dirname, '../.env');
+const ENV_FILE = join(__dirname, '../../../.env');
 
 dotenv.config({ path: ENV_FILE });
 
