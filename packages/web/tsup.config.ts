@@ -6,5 +6,6 @@ export default defineConfig({
     options.sourcemap = 'inline';
   },
   format: 'esm',
-  target: 'esnext'
+  sourcemap: 'inline',
+  target: ['chrome110', 'edge110', 'firefox110', 'safari16']
 });

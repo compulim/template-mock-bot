@@ -4,32 +4,11 @@
   "private": true,
   "exports": {
     ".": {
-      "import": "./dist/index.js"
+      "import": "./dist/index.mjs"
     }
   },
   "scripts": {
     "build": "tsup ./src/index.ts",
     "precommit": "eslint ."
-  },
-  "dependencies": {
-    "botbuilder": "^4.21.3",
-    "math-random": "^2.0.1",
-    "pretty-ms": "^7.0.1",
-    "valibot": "^0.24.1"
-  },
-  "devDependencies": {
-    "@tsconfig/strictest": "^2.0.2",
-    "@types/math-random": "^1.0.2",
-    "botframework-directlinejs": "^0.15.5",
-    "eslint": "^8.55.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^5.0.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "prettier": "^3.1.1",
-    "tsup": "^8.0.1",
-    "typescript": "^5.3.3"
   }
 }

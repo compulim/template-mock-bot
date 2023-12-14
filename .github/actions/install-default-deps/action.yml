@@ -50,12 +50,42 @@ runs:
 
     - env:
         VERSION_TAG: ${{ inputs.latest == 'true' && '@latest' || '' }}
+      name: Run npm install for pages/production
+      run: |
+        npm install \
+          --save-dev \
+          --workspace=pages \
+          assert${{ env.VERSION_TAG }} \
+          botframework-webchat${{ env.VERSION_TAG }} \
+          buffer${{ env.VERSION_TAG }} \
+          constants@npm:constants-browserify${{ env.VERSION_TAG }} \
+          crypto@npm:crypto-browserify${{ env.VERSION_TAG }} \
+          http@npm:stream-http${{ env.VERSION_TAG }} \
+          https@npm:https-browserify${{ env.VERSION_TAG }} \
+          os@npm:os-browserify${{ env.VERSION_TAG }} \
+          path@npm:path-browserify${{ env.VERSION_TAG }} \
+          react-dom${{ env.VERSION_TAG }} \
+          react${{ env.VERSION_TAG }} \
+          stream@npm:stream-browserify${{ env.VERSION_TAG }} \
+          string_decoder${{ env.VERSION_TAG }} \
+          timers@npm:timers-browserify${{ env.VERSION_TAG }} \
+          url${{ env.VERSION_TAG }} \
+          util${{ env.VERSION_TAG }} \
+          web${{ env.VERSION_TAG }}
+      shell: bash
+      working-directory: ${{ inputs.path }}
+
+    - env:
+        VERSION_TAG: ${{ inputs.latest == 'true' && '@latest' || '' }}
       name: Run npm install for web/production
       run: |
         npm install \
           --save-dev \
           --workspace=web \
-          math-random${{ env.VERSION_TAG }}
+          botbuilder${{ env.VERSION_TAG }} \
+          math-random${{ env.VERSION_TAG }} \
+          pretty-ms${{ env.VERSION_TAG }} \
+          valibot${{ env.VERSION_TAG }}
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -70,13 +100,22 @@ runs:
           eslint${{ env.VERSION_TAG }} \
           eslint-config-standard${{ env.VERSION_TAG }} \
           eslint-plugin-import${{ env.VERSION_TAG }} \
-          eslint-plugin-node${{ env.VERSION_TAG }} \
           eslint-plugin-prettier${{ env.VERSION_TAG }} \
           eslint-plugin-promise${{ env.VERSION_TAG }} \
           eslint-plugin-standard${{ env.VERSION_TAG }} \
           prettier${{ env.VERSION_TAG }} \
-          tsup${{ env.VERSION_TAG }} \
           typescript${{ env.VERSION_TAG }}
+      shell: bash
+      working-directory: ${{ inputs.path }}
+
+    - env:
+        VERSION_TAG: ${{ inputs.latest == 'true' && '@latest' || '' }}
+      name: Run npm install for bot/development
+      run: |
+        npm install \
+          --save-dev ${{ inputs.exact-prod == 'true' && '--save-exact' || '' }} \
+          --workspace=bot \
+          tsup${{ env.VERSION_TAG }}
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -90,6 +129,23 @@ runs:
           @types/express${{ env.VERSION_TAG }} \
           @types/math-random${{ env.VERSION_TAG }} \
           @types/node${{ env.VERSION_TAG }}
+          eslint-plugin-node${{ env.VERSION_TAG }} \
+          tsup${{ env.VERSION_TAG }}
+      shell: bash
+      working-directory: ${{ inputs.path }}
+
+    - env:
+        VERSION_TAG: ${{ inputs.latest == 'true' && '@latest' || '' }}
+      name: Run npm install for pages/development
+      run: |
+        npm install \
+          --save-dev ${{ inputs.exact-prod == 'true' && '--save-exact' || '' }} \
+          --workspace=pages \
+          @types/math-random${{ env.VERSION_TAG }} \
+          @types/react${{ env.VERSION_TAG }} \
+          @types/react-dom${{ env.VERSION_TAG }} \
+          eslint-plugin-react${{ env.VERSION_TAG }} \
+          esbuild${{ env.VERSION_TAG }}
       shell: bash
       working-directory: ${{ inputs.path }}
 
@@ -102,6 +158,7 @@ runs:
           --workspace=web \
           @types/math-random${{ env.VERSION_TAG }} \
           botframework-directlinejs${{ env.VERSION_TAG }}
+          tsup${{ env.VERSION_TAG }}
       shell: bash
       working-directory: ${{ inputs.path }}
 

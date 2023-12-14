@@ -1,0 +1,16 @@
+{
+  "name": "pages",
+  "version": "0.0.0-0",
+  "private": true,
+  "scripts": {
+    "build": "node ./esbuild.mjs",
+    "bump": "npm run bump:prod && npm run bump:dev",
+    "bump:dev": "if [ `cat package.json | jq -r '.devDependencies | length'` -ne 0 ]; then npm install $BUMP_DEV_OPTIONS $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.devDependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
+    "bump:prod": "if [ `cat package.json | jq -r '.dependencies | length'` -ne 0 ]; then npm install $BUMP_PROD_OPTIONS $(cat package.json | jq -r '(.pinDependencies // {}) as $p | ((.dependencies // {}) | keys) | map(. + \"@\" + ($p[.] // [\"latest\"])[0]) | .[]'); fi",
+    "eslint": "npm run precommit",
+    "precommit": "npm run precommit:eslint && npm run precommit:typescript",
+    "precommit:eslint": "eslint ./src/",
+    "precommit:typescript": "tsc --project ./src/tsconfig.json",
+    "start": "npm run build -- --servedir=./public"
+  }
+}

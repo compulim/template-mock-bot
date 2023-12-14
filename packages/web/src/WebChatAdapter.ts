@@ -6,6 +6,7 @@ import { type LogicHandler } from './LogicHandler.js';
 import dateNow from './private/incrementalNow.js';
 import DeferredObservable from './private/DeferredObservable.js';
 import Observable from './private/Observable.js';
+import shareObservable from './private/shareObservable.js';
 
 export const USER_PROFILE = { id: 'user', role: 'user' };
 export const BOT_PROFILE = { id: 'bot', name: 'bot', role: 'bot' };
@@ -59,8 +60,8 @@ export default class WebChatAdapter extends BotAdapter {
     });
 
     this.#botConnection = {
-      activity$: this.#activityDeferred.observable,
-      connectionStatus$: this.#connectionStatusDeferred.observable,
+      activity$: shareObservable(this.#activityDeferred.observable),
+      connectionStatus$: shareObservable(this.#connectionStatusDeferred.observable),
       end() {},
       getSessionId() {
         return new Observable(observer => observer.error(new Error('Not supported.')));
@@ -85,14 +86,14 @@ export default class WebChatAdapter extends BotAdapter {
             timestamp
           };
 
-          async () => {
+          (async () => {
             await this.onReceive(serviceActivity);
 
             observer.next(id);
             observer.complete();
 
             this.#activityDeferred.next(serviceActivity);
-          };
+          })();
         });
       }
     };

@@ -18,9 +18,7 @@ export const createDirectLine = ({ processor }: CreateDirectLineInit = {}) => {
 
     const bot = new EchoBot({ conversationState, userState });
 
-    botAdapter.processActivity(async context => {
-      await bot.run(context);
-    });
+    botAdapter.processActivity(context => bot.run(context));
   } else {
     botAdapter.processActivity(processor);
   }

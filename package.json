@@ -9,7 +9,8 @@
   "workspaces": [
     "packages/bot/",
     "packages/nodejs/",
-    "packages/web/"
+    "packages/web/",
+    "packages/pages/"
   ],
   "files": [
     "iisnode.yml",
@@ -28,9 +29,6 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "precommit": "npm run precommit --workspaces",
-    "start": "nodemon --exec \"npm run build && node .\" --ext js,json,ts --verbose --watch './packages/*/src/**'"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.2"
+    "start": "nodemon --exec \"npm run build && node .\" --ext js,json,ts,tsx --verbose --watch './packages/*/src/**'"
   }
 }
