@@ -1,5 +1,5 @@
 import { ConversationState, MemoryStorage, UserState } from 'botbuilder';
-import { EchoBot } from 'bot';
+import { EchoBot } from '@npm-workspace/bot';
 
 import { type LogicHandler } from './LogicHandler';
 import WebChatAdapter from './WebChatAdapter';
