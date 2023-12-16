@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   precommit:
+    if: (!startsWith(github.repository, 'compulim/template-'))
     name: Precommit
     runs-on: ubuntu-latest
     steps:
