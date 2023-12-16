@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "types": []
+  },
+  "extends": "@tsconfig/strictest"
+}

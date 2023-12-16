@@ -1,8 +1,8 @@
 import { ConnectionStatus } from 'botframework-directlinejs';
 import { BotAdapter, TurnContext, type Activity, type ConversationReference } from 'botbuilder';
 import random from 'math-random';
-import { type LogicHandler } from './LogicHandler.js';
 
+import { type LogicHandler } from './LogicHandler.js';
 import dateNow from './private/incrementalNow.js';
 import DeferredObservable from './private/DeferredObservable.js';
 import Observable from './private/Observable.js';
@@ -47,13 +47,9 @@ export default class WebChatAdapter extends BotAdapter {
     this.#conversationId = `c_${random().toString(36).substring(2, 7)}`;
     this.#logic = () => Promise.resolve();
 
-    let firstActivitySubscription = true;
-
     this.#connectionStatusDeferred = new DeferredObservable<number>();
 
     this.#activityDeferred = new DeferredObservable(() => {
-      firstActivitySubscription = true;
-
       this.#connectionStatusDeferred.next(0 satisfies ConnectionStatus.Uninitialized);
       this.#connectionStatusDeferred.next(1 satisfies ConnectionStatus.Connecting);
       this.#connectionStatusDeferred.next(2 satisfies ConnectionStatus.Online);

@@ -29,7 +29,7 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "precommit": "npm run precommit --workspaces",
-    "scaffold": "npm install --save-dev nodemon@latest && npm install --save-dev --workspaces @tsconfig/strictest@latest eslint@latest eslint-config-standard@latest eslint-plugin-import@latest eslint-plugin-prettier@latest eslint-plugin-promise@latest eslint-plugin-standard@latest prettier@latest typescript@latest",
+    "scaffold": "npm install --save-dev nodemon@latest && npm install --save-dev --workspaces @tsconfig/strictest@latest @typescript-eslint/eslint-plugin eslint@latest eslint-config-standard@latest eslint-plugin-import@latest eslint-plugin-prettier@latest eslint-plugin-promise@latest eslint-plugin-standard@latest prettier@latest typescript@latest",
     "start": "nodemon --exec \"npm run build && node .\" --ext js,json,ts,tsx --verbose --watch './packages/*/src/**'"
   }
 }

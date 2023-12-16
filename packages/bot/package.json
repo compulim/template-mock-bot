@@ -5,11 +5,12 @@
   "private": true,
   "exports": {
     ".": {
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
     }
   },
   "scripts": {
-    "build": "tsup ./src/index.ts",
+    "build": "tsup ./src/index.ts --dts",
     "precommit": "eslint .",
     "scaffold": "npm install --save botbuilder@latest dotenv@latest pretty-ms@latest && npm install --save-dev tsup@latest"
   }

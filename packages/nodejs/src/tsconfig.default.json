@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": true,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "types": ["node"]
+  },
+  "extends": "@tsconfig/strictest"
+}

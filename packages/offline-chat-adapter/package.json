@@ -4,12 +4,16 @@
   "private": true,
   "exports": {
     ".": {
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
     }
   },
   "scripts": {
-    "build": "node ./build.mjs",
+    "build": "tsup ./src/index.ts --dts",
+    "build:esbuild": "node ./build.mjs",
+    "build:old": "npm run build:esbuild && npm run build:typescript",
+    "build:typescript": "tsc --project ./src/tsconfig.json",
     "precommit": "eslint .",
-    "scaffold": "npm install --save math-random@latest pretty-ms@latest valibot@latest && npm install --save-dev @npm-workspace/bot@0.0.0-0 assert@latest @types/math-random@latest botbuilder@latest botframework-directlinejs@latest buffer@latest constants@npm:constants-browserify@latest crypto@npm:crypto-browserify@latest esbuild@latest http@npm:stream-http@latest https@npm:https-browserify@latest os@npm:os-browserify@latest path@npm:path-browserify@latest stream@npm:stream-browserify@latest string_decoder@latest timers@npm:timers-browserify@latest url@latest util@latest"
+    "scaffold": "npm install --save math-random@latest pretty-ms@latest valibot@latest && npm install --save-dev @npm-workspace/bot@0.0.0-0 assert@latest @types/math-random@latest botbuilder@latest botframework-directlinejs@latest buffer@latest constants@npm:constants-browserify@latest crypto@npm:crypto-browserify@latest http@npm:stream-http@latest https@npm:https-browserify@latest os@npm:os-browserify@latest path@npm:path-browserify@latest stream@npm:stream-browserify@latest string_decoder@latest timers@npm:timers-browserify@latest url@latest util@latest"
   }
 }
