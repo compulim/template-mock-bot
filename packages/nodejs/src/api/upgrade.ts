@@ -9,6 +9,7 @@ export default function upgrade(
   // Listen for Upgrade requests for Streaming.
   server.on('upgrade', (req, socket, head) => {
     // TODO: Fix the incompatibility between NodeJS.Duplex and INodeSocket.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     adapter.useWebSocket(req, socket as any, head, async context => {
       // After connecting via WebSocket, run this logic for every request sent over
       // the WebSocket connection.

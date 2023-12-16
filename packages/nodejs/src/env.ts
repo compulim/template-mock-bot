@@ -23,6 +23,7 @@ const EnvSchema = object({
 parse(EnvSchema, process.env);
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface ProcessEnv extends Output<typeof EnvSchema> {}
   }

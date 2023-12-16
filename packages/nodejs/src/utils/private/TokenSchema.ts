@@ -7,4 +7,4 @@ const TokenSchema = object({
   userId: optional(string())
 });
 
-export default TokenSchema
+export default TokenSchema;
