@@ -17,7 +17,7 @@ concurrency:
 jobs:
   # Single deploy job since we're just deploying
   build:
-    if: ${{ github.event_name != 'push' || (github.run_number > 1 && github.repository != 'compulim/template-mock-bot') }}
+    if: github.event_name != 'push' || (github.run_number > 1 && github.repository != 'compulim/template-mock-bot')
     name: Build
     permissions:
       contents: read
